@@ -1,0 +1,75 @@
+<%= form_with(model: cheese, local: true) do |form| %>
+  <% if cheese.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cheese.errors.count, "error") %> prohibited this cheese from being saved:</h2>
+
+      <ul>
+        <% cheese.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.text_field :price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rennet_coagulat, "Animal Rennet", :value => "1"  %>
+    <%= form.radio_button :rennet_coagulat, "Animal Rennet", :checked => true  %>
+    <%= form.label :rennet_coagulat, "Vegetarian Friendly", :value => "0" %>
+    <%= form.radio_button :rennet_coagulat, "Vegetarian Friendly"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cheese_type %>
+    <%= form.text_field :cheese_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rind %>
+    <%= form.text_field :rind %>
+  </div>
+
+  <div class="field">
+    <%= form.label :milk %>
+    <%= form.text_field :milk %>
+  </div>
+
+  <div class="field">
+    <%= form.label :size %>
+    <%= form.text_field :size %>
+  </div>
+
+  <div class="field">
+    <%= form.label :availability %>
+    <%= form.number_field :availability %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :store_id, value: @store %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+

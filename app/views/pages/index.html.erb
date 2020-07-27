@@ -1,0 +1,19 @@
+<h1>CheeseBae</h1>
+<h2>Latest Listings:</h2>
+<% @latest.each do |cheese| %>
+    <%= link_to cheese.name, cheese_path(cheese.id) %>
+    <% store = @store.find(cheese.store_id) %>
+    <%= link_to store.name, store_path(store.id) %>
+    <%= cheese.description %>
+    <%= cheese.price.round(2) %>
+    <%= cheese.rennet_coagulat %>
+    <%= cheese.location %>
+    <%= cheese.cheese_type %>
+    <%= cheese.rind %>
+    <%= cheese.milk %>
+    <%= cheese.size %>
+    <%= cheese.availability %>
+    <br>
+    <br>
+<% end %>
+

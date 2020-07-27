@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @cheese.name %>
+</p>
+
+<p>
+  <strong>Available At:</strong>
+  <% store = @store.find(@cheese.store_id) %>
+  <%= link_to store.name, store_path(store.id) %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @cheese.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @cheese.price %>
+</p>
+
+<p>
+  <strong>Rennet coagulat:</strong>
+  <%= @cheese.rennet_coagulat %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @cheese.location %>
+</p>
+
+<p>
+  <strong>Cheese type:</strong>
+  <%= @cheese.cheese_type %>
+</p>
+
+<p>
+  <strong>Rind:</strong>
+  <%= @cheese.rind %>
+</p>
+
+<p>
+  <strong>Milk:</strong>
+  <%= @cheese.milk %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @cheese.size %>
+</p>
+
+<p>
+  <strong>Availability:</strong>
+  <%= @cheese.availability %>
+</p>
+
+<%= link_to 'Edit', edit_cheese_path(@cheese) %> |
+<%= link_to 'Home', root_path %>
