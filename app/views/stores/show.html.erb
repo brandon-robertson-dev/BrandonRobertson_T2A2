@@ -2,10 +2,16 @@
 
 <h1><%= @store.name %></h1>
 
+<%= image_tag @store.store_picture if @store.store_picture.attached? %>
+
 <p>
   <strong>Name:</strong>
   <%= @store.name %>
 </p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @store.user.firstname %>
 
 <p>
   <strong>Email:</strong>
@@ -35,6 +41,9 @@
   <% end %>
 </table>
 <br>
-<%= link_to 'Edit', edit_store_path(@store) %> |
-<%= link_to 'Home', root_path %> |
-<%= link_to 'Add Product', new_cheese_path(:store_id => @store.id) %>
+<% if current_user %>
+  <% if (current_user.id == @store.user.id) %>
+    <%= link_to 'Edit', edit_store_path(@store) %> |
+    <%= link_to 'Add Product', new_cheese_path(:store_id => @store.id) %>
+  <% end %>
+<% end %>

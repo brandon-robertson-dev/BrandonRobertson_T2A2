@@ -5,12 +5,34 @@ class CheesesController < ApplicationController
   # GET /cheeses.json
   def index
     @cheeses = Cheese.all
+    @store = Store.all
   end
 
   # GET /cheeses/1
   # GET /cheeses/1.json
   def show
     @store = Store.all
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      customer_email: current_user.email,
+      line_items: [{
+      name: @cheese.name,
+      description: @cheese.description,
+      amount: @cheese.price * 100,
+      currency: 'aud',
+      quantity: 1,
+      }],
+      payment_intent_data: {
+      metadata: {
+      user_id: current_user.id,
+      listing_id: @cheese.id
+      }
+      },
+      success_url: "#{root_url}payments/success?userId=#{current_user.id}&cheeseId=#{@cheese.id}",
+      cancel_url: "#{root_url}cheese"
+      )
+
+    @session_id = session.id
   end
 
   # GET /cheeses/new
@@ -21,6 +43,7 @@ class CheesesController < ApplicationController
 
   # GET /cheeses/1/edit
   def edit
+    @store = params[:store_id]
   end
 
   # POST /cheeses
@@ -42,6 +65,7 @@ class CheesesController < ApplicationController
   # PATCH/PUT /cheeses/1
   # PATCH/PUT /cheeses/1.json
   def update
+    @store = params[:store_id]
     respond_to do |format|
       if @cheese.update(cheese_params)
         format.html { redirect_to @cheese, notice: 'Cheese was successfully updated.' }
@@ -71,6 +95,6 @@ class CheesesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cheese_params
-      params.require(:cheese).permit(:name, :description, :price, :rennet_coagulat, :location, :cheese_type, :rind, :milk, :size, :availability, :store_id)
+      params.require(:cheese).permit(:name, :description, :price, :rennet_coagulat, :location, :cheese_type, :rind, :milk, :size, :availability, :store_id, :item_picture)
     end
 end

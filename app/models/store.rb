@@ -1,3 +1,7 @@
 class Store < ApplicationRecord
     has_many :cheeses, dependent: :destroy
+    
+    belongs_to :user
+
+    has_one_attached :store_picture
 end

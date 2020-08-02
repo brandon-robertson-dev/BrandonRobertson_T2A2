@@ -15,6 +15,7 @@ class StoresController < ApplicationController
   # GET /stores/new
   def new
     @store = Store.new
+    @user = params[:user_id]
   end
 
   # GET /stores/1/edit
@@ -69,6 +70,6 @@ class StoresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def store_params
-      params.require(:store).permit(:name, :email, :contact_number)
+      params.require(:store).permit(:name, :email, :contact_number, :store_picture, :user_id)
     end
 end

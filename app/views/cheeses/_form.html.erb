@@ -40,17 +40,17 @@
 
   <div class="field">
     <%= form.label :cheese_type %>
-    <%= form.text_field :cheese_type %>
+    <%= form.select :cheese_type, ['Mozzarella', 'Cheddar', 'Emmental', 'Gouda', 'Parmigiano-Reggiano', 'Feta', 'Brie', 'Parmesan', 'Mascarpone', 'Gruyere', 'Blue', 'Ricotta'] %>
   </div>
 
   <div class="field">
     <%= form.label :rind %>
-    <%= form.text_field :rind %>
+    <%= form.select :rind, ['No Rind/Waxy Rind', 'Bloomy Rind', 'Washed Rind', 'Natural Rind'] %>
   </div>
 
   <div class="field">
     <%= form.label :milk %>
-    <%= form.text_field :milk %>
+    <%= form.select :milk, ['Cow', 'Goat', 'Mixed', 'Sheep', 'Water buffalo', 'Yak', 'Soy', 'Almond', 'Rice'] %>
   </div>
 
   <div class="field">
@@ -64,7 +64,12 @@
   </div>
 
   <div>
-    <%= form.hidden_field :store_id, value: @store %>
+    <%= form.label :item_picture %>
+    <%= form.file_field :item_picture, autocomplete: "item-picture" %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :store_id, value: @cheese.store_id %>
   </div>
 
   <div class="actions">

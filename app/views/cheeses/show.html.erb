@@ -51,10 +51,38 @@
   <%= @cheese.size %>
 </p>
 
+
+
 <p>
   <strong>Availability:</strong>
-  <%= @cheese.availability %>
-</p>
+  <% if @cheese.availability > 0 %>
+    <%= @cheese.availability %><br>
+      <button data-stripe="payment">
+        Buy Now <%= number_to_currency(@cheese.price) %>
+      </button>
 
-<%= link_to 'Edit', edit_cheese_path(@cheese) %> |
-<%= link_to 'Home', root_path %>
+      <script src="https://js.stripe.com/v3/"></script>
+
+      <script>
+        document
+        .querySelector("[data-stripe='payment']")
+        .addEventListener("click", () => {
+          const stripe = Stripe(
+            "<%= Rails.application.credentials.dig(:stripe, :public_key) %>"
+          );
+
+          stripe.redirectToCheckout({
+            sessionId: "<%= @session_id %>"
+          });
+        });
+      </script>
+  <% else %>
+    <p>Sold Out</p>
+  <% end %>
+</p>
+<% if current_user %>
+  <% if current_user.id == store.user.id %>
+    <%= link_to 'Edit', edit_cheese_path(@cheese) %> |
+    <%= link_to 'Destroy', @cheese, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+<% end %>

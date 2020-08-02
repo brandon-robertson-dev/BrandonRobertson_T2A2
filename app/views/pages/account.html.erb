@@ -1,0 +1,26 @@
+<h2>Account Details</h2>
+
+<% if current_user.store.blank? %>
+    <h3>Start A Store?</h3>
+    <%= link_to 'Create Store', new_store_path(:user_id => current_user.id) %>
+<% else %>
+    <h3>Your Store</h3>
+    <%= image_tag current_user.store.store_picture if current_user.store.store_picture.attached? %><br>
+    <%= link_to current_user.store.name, store_path(current_user.store.id) %><br>
+    <%= link_to 'Delete Store?', current_user.store, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+<h3>First Name</h3>
+<%= current_user.firstname %>
+
+<h3>Last Name</h3>
+<%= current_user.lastname %>
+
+<h3>Email</h3>
+<%= current_user.email %>
+
+<h3>Profile Picture</h3>
+<%= image_tag current_user.profile_picture if current_user.profile_picture.attached? %>
+<br>
+<%= link_to "Back", :back %><br>
+<%= link_to "Edit Account", edit_user_registration_path %>

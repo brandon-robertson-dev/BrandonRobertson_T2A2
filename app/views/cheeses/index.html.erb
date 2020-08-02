@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Store</th>
       <th>Description</th>
       <th>Price</th>
       <th>Rennet coagulat</th>
@@ -22,7 +23,8 @@
   <tbody>
     <% @cheeses.each do |cheese| %>
       <tr>
-        <td><%= cheese.name %></td>
+        <td><%= link_to cheese.name, cheese %></td>
+        <td><%= link_to @store.find(cheese.store_id).name, store_path(cheese.store_id) %>
         <td><%= cheese.description %></td>
         <td><%= cheese.price %></td>
         <td><%= cheese.rennet_coagulat %></td>
@@ -32,9 +34,14 @@
         <td><%= cheese.milk %></td>
         <td><%= cheese.size %></td>
         <td><%= cheese.availability %></td>
-        <td><%= link_to 'Show', cheese %></td>
-        <td><%= link_to 'Edit', edit_cheese_path(cheese) %></td>
-        <td><%= link_to 'Destroy', cheese, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user %>
+          <% if current_user.store %>
+            <% if current_user.store.id == cheese.store_id %>
+              <td><%= link_to 'Edit', edit_cheese_path(cheese) %></td>
+              <td><%= link_to 'Destroy', cheese, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          <% end %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
