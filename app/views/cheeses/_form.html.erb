@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :price %>
-    <%= form.text_field :price %>
+    $<%= form.text_field :price %>
   </div>
 
   <div class="field">
@@ -69,7 +69,7 @@
   </div>
 
   <div>
-    <%= form.hidden_field :store_id, value: @cheese.store_id %>
+    <%= form.hidden_field :store_id, value: @store %>
   </div>
 
   <div class="actions">

@@ -1,6 +1,6 @@
 <h1>CheeseBae</h1>
 <h2>Latest Listings:</h2>
-<% @latest.each do |cheese| %>
+<% @latest.reverse.each do |cheese| %>
     <%= link_to cheese.name, cheese_path(cheese.id) %>
     <% store = @store.find(cheese.store_id) %>
     <%= link_to store.name, store_path(store.id) %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_01_034608) do
+ActiveRecord::Schema.define(version: 2020_08_03_031929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,8 +50,6 @@ ActiveRecord::Schema.define(version: 2020_08_01_034608) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "store_id", null: false
-    t.integer "price_cents", default: 0, null: false
-    t.string "price_currency", default: "USD", null: false
     t.index ["store_id"], name: "index_cheeses_on_store_id"
   end
 
@@ -62,10 +60,6 @@ ActiveRecord::Schema.define(version: 2020_08_01_034608) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
-    t.string "uid"
-    t.string "provider"
-    t.string "access_code"
-    t.string "publishable_key"
     t.index ["user_id"], name: "index_stores_on_user_id"
   end
 
@@ -79,10 +73,6 @@ ActiveRecord::Schema.define(version: 2020_08_01_034608) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "firstname"
     t.string "lastname"
-    t.string "uid"
-    t.string "provider"
-    t.string "access_code"
-    t.string "publishable_key"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
