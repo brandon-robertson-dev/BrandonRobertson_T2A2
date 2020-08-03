@@ -10,23 +10,30 @@
   </head>
 
   <body>
+
+
+
     <h1>CheeseBae</h1>
-    <%= link_to "Home", root_path %>
-    <%= link_to "Explore", explore_path %>
-    <%= link_to "Contact Us", contact_path %>
-    <% if current_user %>
-      <%= link_to "Account", account_path %>
-      <%= link_to "Orders", destroy_user_session_path %>
-      <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "Sign In", new_user_session_path %>
-      <%= link_to "Sign Up", new_user_registration_path %>
-    <% end %>
-    <br>
-    <% if user_signed_in? %>
-      <div>Hi <%= current_user.firstname %>!</div>
-      <p><%= image_tag current_user.profile_picture if current_user.profile_picture.attached? %></p>
-    <% end %>
+    <ul class="nav-list">
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Explore", explore_path %></li>
+      <li><%= link_to "Contact Us", contact_path %></li>
+      <% if current_user %>
+        <li><%= link_to "Account", account_path %></li>
+        <li><%= link_to "Orders", destroy_user_session_path %></li>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+      <% else %>
+        <li><%= link_to "Sign In", new_user_session_path %></li>
+        <li><%= link_to "Sign Up", new_user_registration_path %></li>
+      <% end %>
+      <% if user_signed_in? %>
+        <p>Hi <%= current_user.firstname %>!</p>
+        <%= image_tag current_user.profile_picture if current_user.profile_picture.attached? %>
+      <% end %>
+    </ul>
+
+
+
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

@@ -1,49 +1,54 @@
 <p id="notice"><%= notice %></p>
+<div class="wrapper">
+  <div class="sidebar">
+    <h1><%= @store.name %></h1>
 
-<h1><%= @store.name %></h1>
+    <%= image_tag @store.store_picture if @store.store_picture.attached? %>
 
-<%= image_tag @store.store_picture if @store.store_picture.attached? %>
+    <p>
+      <strong>Name:</strong>
+      <%= @store.name %>
+    </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @store.name %>
-</p>
+    <p>
+      <strong>Owner:</strong>
+      <%= @store.user.firstname %>
 
-<p>
-  <strong>Owner:</strong>
-  <%= @store.user.firstname %>
+    <p>
+      <strong>Email:</strong>
+      <%= @store.email %>
+    </p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @store.email %>
-</p>
-
-<p>
-  <strong>Contact number:</strong>
-  <%= @store.contact_number %>
-</p>
-
-<h2>Cheeses</h2>
-<table>
-  <% @store.cheeses.each do |cheese| %>
-    <tr>
-      <td> <strong>Name:</strong><br><%= link_to cheese.name, cheese_path(cheese.id) %> </td>
-      <td> <strong>Description:</strong><br><%= cheese.description %> </td>
-      <td> <strong>Price:</strong><br>$<%= cheese.price.round(2) %> </td>
-      <td> <strong>Rennet:</strong><br><%= cheese.rennet_coagulat %> </td>
-      <td> <strong>Location:</strong><br><%= cheese.location %> </td>
-      <td> <strong>Type:</strong><br><%= cheese.cheese_type %> </td>
-      <td> <strong>Rind:</strong><br><%= cheese.rind %> </td>
-      <td> <strong>Milk:</strong><br><%= cheese.milk %> </td>
-      <td> <strong>Size:</strong><br><%= cheese.size %> </td>
-      <td> <strong>How Many Available:</strong><br><%= cheese.availability %> </td>
-    </tr>
-  <% end %>
-</table>
-<br>
-<% if current_user %>
-  <% if (current_user.id == @store.user.id) %>
-    <%= link_to 'Edit', edit_store_path(@store) %> |
-    <%= link_to 'Add Product', new_cheese_path(:store_id => @store.id) %>
-  <% end %>
-<% end %>
+    <p>
+      <strong>Contact number:</strong>
+      <%= @store.contact_number %>
+    </p>
+  </div>
+  <div class="content">
+    <h2>Cheeses</h2>
+    <div class="container">
+      <% @store.cheeses.each do |cheese| %>
+        <div class="flexboxes">
+          <%= image_tag cheese.item_picture if cheese.item_picture.attached? %>
+          <p><%= link_to cheese.name, cheese_path(cheese.id) %></p>
+          <p><%= cheese.description %></p>
+          <p>$<%= cheese.price.round(2) %></p>
+          <p><%= cheese.rennet_coagulat %></p>
+          <p><%= cheese.location %></p>
+          <p><%= cheese.cheese_type %></p>
+          <p><%= cheese.rind %></p>
+          <p><%= cheese.milk %></p>
+          <p><%= cheese.size %></p>
+          <p><%= cheese.availability %></p>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <% if current_user %>
+      <% if (current_user.id == @store.user.id) %>
+        <%= link_to 'Edit', edit_store_path(@store) %> |
+        <%= link_to 'Add Product', new_cheese_path(:store_id => @store.id) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
