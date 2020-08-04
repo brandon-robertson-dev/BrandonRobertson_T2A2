@@ -41,9 +41,7 @@
   <% end %>
 </table>
 <br>
-<% if current_user %>
-  <% if (current_user.id == @store.user.id) %>
-    <%= link_to 'Edit', edit_store_path(@store) %> |
-    <%= link_to 'Add Product', new_cheese_path(:store_id => @store.id) %>
-  <% end %>
+<% if can? :edit, @store %>
+  <%= link_to 'Edit', edit_store_path(@store) %> |
+  <%= link_to 'Add Product', new_cheese_path(:store_id => @store.id) %>
 <% end %>

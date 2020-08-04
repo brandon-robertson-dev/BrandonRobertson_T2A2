@@ -1,5 +1,6 @@
 class CheesesController < ApplicationController
   before_action :set_cheese, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
 
   # GET /cheeses
   # GET /cheeses.json
@@ -12,27 +13,29 @@ class CheesesController < ApplicationController
   # GET /cheeses/1.json
   def show
     @store = Store.all
-    session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
-      customer_email: current_user.email,
-      line_items: [{
-      name: @cheese.name,
-      description: @cheese.description,
-      amount: @cheese.price * 100,
-      currency: 'aud',
-      quantity: 1,
-      }],
-      payment_intent_data: {
-      metadata: {
-      user_id: current_user.id,
-      listing_id: @cheese.id
-      }
-      },
-      success_url: "#{root_url}payments/success?userId=#{current_user.id}&cheeseId=#{@cheese.id}",
-      cancel_url: "#{root_url}cheese"
-      )
+    if @user.present?
+      session = Stripe::Checkout::Session.create(
+        payment_method_types: ['card'],
+        customer_email: current_user.email,
+        line_items: [{
+        name: @cheese.name,
+        description: @cheese.description,
+        amount: @cheese.price * 100,
+        currency: 'aud',
+        quantity: 1,
+        }],
+        payment_intent_data: {
+        metadata: {
+        user_id: current_user.id,
+        listing_id: @cheese.id
+        }
+        },
+        success_url: "#{root_url}payments/success?userId=#{current_user.id}&cheeseId=#{@cheese.id}",
+        cancel_url: "#{root_url}cheese"
+        )
 
-    @session_id = session.id
+      @session_id = session.id
+    end
   end
 
   # GET /cheeses/new

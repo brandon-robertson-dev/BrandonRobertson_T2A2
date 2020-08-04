@@ -57,4 +57,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'stripe'
 gem 'oauth2'
 gem 'aws-sdk-s3'
-gem 'money-rails'
+gem 'cancancan'

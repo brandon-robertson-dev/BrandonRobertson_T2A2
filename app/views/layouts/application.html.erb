@@ -13,15 +13,20 @@
     <h1>CheeseBae</h1>
     <%= link_to "Home", root_path %>
     <%= link_to "Explore", explore_path %>
-    <%= link_to "Contact Us", contact_path %>
     <% if current_user %>
-      <%= link_to "Account", account_path %>
-      <%= link_to "Orders", destroy_user_session_path %>
-      <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+      <% if current_user.loggedin? %>
+        <% if current_user.owner? %>
+          <%= link_to current_user.store.name, store_path(current_user.store.id) %>
+        <% end %>
+        <%= link_to "Account", account_path %>
+        <%= link_to "Orders", destroy_user_session_path %>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+      <% end %>
     <% else %>
       <%= link_to "Sign In", new_user_session_path %>
       <%= link_to "Sign Up", new_user_registration_path %>
     <% end %>
+    <%= link_to "Contact Us", contact_path %>
     <br>
     <% if user_signed_in? %>
       <div>Hi <%= current_user.firstname %>!</div>
