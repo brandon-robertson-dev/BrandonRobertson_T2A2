@@ -23,6 +23,17 @@
   <%= @store.contact_number %>
 </p>
 
+<h2>Review</h2>
+<p>
+  <strong>User:</strong><br>
+  <%= @store.feedbacks.last %><br>
+  <strong>Review:</strong><br>
+  <%= @store.feedbacks.last %>
+</p>
+<% if can? :write, @feedback %>
+  <%= link_to 'Add Review', new_feedback_path(:store_id => @store.id, :user_id => current_user.id) %>
+<% end %>
+
 <h2>Cheeses</h2>
 <table>
   <% @store.cheeses.each do |cheese| %>

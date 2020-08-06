@@ -1,0 +1,39 @@
+<%= form_with(model: order, local: true) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>Hi <%=current_user.firstname %>, please fill the form below to continue with your purchase. </p>
+
+  <div class="field">
+    <%=hidden_field_tag :user, current_user %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shipping_address %>
+    <%= form.text_field :shipping_address %>
+  </div>
+
+  <div class="field">
+    <%=hidden_field_tag :product_id, params[:product_id] %>
+  </div>
+
+  <div class="field">
+    <%=hidden_field_tag :cheese_title, Product.find(params[:cheese_id]).title %>
+  </div>
+
+  <div class="field">
+    <%=hidden_field_tag :cheese_price, Product.find(params[:cheese_id]).price %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

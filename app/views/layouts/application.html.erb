@@ -14,12 +14,12 @@
     <%= link_to "Home", root_path %>
     <%= link_to "Explore", explore_path %>
     <% if current_user %>
-      <% if current_user.loggedin? %>
+      <% if user_signed_in? %>
         <% if current_user.owner? %>
-          <%= link_to current_user.store.name, store_path(current_user.store.id) %>
+          <%= link_to 'Your Store', store_path(current_user.store.id) %>
         <% end %>
         <%= link_to "Account", account_path %>
-        <%= link_to "Orders", destroy_user_session_path %>
+        <%= link_to "Orders", orders_path %>
         <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
       <% end %>
     <% else %>

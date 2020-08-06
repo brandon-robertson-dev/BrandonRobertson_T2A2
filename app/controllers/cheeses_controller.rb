@@ -1,19 +1,25 @@
 class CheesesController < ApplicationController
   before_action :set_cheese, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /cheeses
   # GET /cheeses.json
   def index
-    @cheeses = Cheese.all
-    @store = Store.all
+    # @cheeses = Cheese.all
+    @stores = Store.all
+    @cheeses = Cheese.where(nil)
+    @cheeses = @cheeses.filter_by_cheese_type(params[:cheese_type]) if params[:cheese_type].present?
+    @cheeses = @cheeses.filter_by_rennet(params[:rennet_coagulat]) if params[:rennet_coagulat].present?
+    @cheeses = @cheeses.filter_by_rind(params[:rind]) if params[:rind].present?
+    @cheeses = @cheeses.filter_by_milk(params[:milk]) if params[:milk].present?
   end
 
   # GET /cheeses/1
   # GET /cheeses/1.json
   def show
     @store = Store.all
-    if @user.present?
+    if can? :buy, @cheese
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
         customer_email: current_user.email,
@@ -31,7 +37,7 @@ class CheesesController < ApplicationController
         }
         },
         success_url: "#{root_url}payments/success?userId=#{current_user.id}&cheeseId=#{@cheese.id}",
-        cancel_url: "#{root_url}cheese"
+        cancel_url: "#{root_url}"
         )
 
       @session_id = session.id

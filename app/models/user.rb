@@ -1,11 +1,14 @@
 class User < ApplicationRecord
-  after_create :assign_default_role
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  after_create :assign_default_role
+  after_create 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
   has_one_attached :profile_picture
   has_and_belongs_to_many :roles
   has_one :store
+  has_many :feedbacks
+  has_many :orders
 
   [:admin, :owner, :loggedin].each do |role|
     define_method("#{role}?") { roles.exists?(name: role) }
@@ -26,5 +29,4 @@ class User < ApplicationRecord
   def assign_default_role
     add_role('loggedin') if self.roles.blank?
   end
-
 end

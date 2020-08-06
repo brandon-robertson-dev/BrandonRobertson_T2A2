@@ -19,6 +19,9 @@
 <h3>Email</h3>
 <%= current_user.email %>
 
+<h3>Your Delivery Address</h3>
+<%= current_user.street_address %>
+
 <h3>Profile Picture</h3>
 <%= image_tag current_user.profile_picture if current_user.profile_picture.attached? %>
 <br>

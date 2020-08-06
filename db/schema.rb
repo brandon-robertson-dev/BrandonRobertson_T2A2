@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_235708) do
+ActiveRecord::Schema.define(version: 2020_08_04_234633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,28 @@ ActiveRecord::Schema.define(version: 2020_08_03_235708) do
     t.index ["store_id"], name: "index_cheeses_on_store_id"
   end
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "comment"
+    t.bigint "user_id", null: false
+    t.bigint "store_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["store_id"], name: "index_feedbacks_on_store_id"
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "shipping_address"
+    t.bigint "cheese_id", null: false
+    t.string "cheese_title"
+    t.string "cheese_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cheese_id"], name: "index_orders_on_cheese_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -86,11 +108,16 @@ ActiveRecord::Schema.define(version: 2020_08_03_235708) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "firstname"
     t.string "lastname"
+    t.string "street_address", default: "Add Address", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cheeses", "stores"
+  add_foreign_key "feedbacks", "stores"
+  add_foreign_key "feedbacks", "users"
+  add_foreign_key "orders", "cheeses"
+  add_foreign_key "orders", "users"
   add_foreign_key "stores", "users"
 end

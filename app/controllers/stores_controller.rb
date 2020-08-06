@@ -1,6 +1,7 @@
 class StoresController < ApplicationController
   before_action :set_store, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  
 
   # GET /stores
   # GET /stores.json
@@ -58,6 +59,7 @@ class StoresController < ApplicationController
   # DELETE /stores/1.json
   def destroy
     @store.destroy
+    current_user.remove_role('owner')
     respond_to do |format|
       format.html { redirect_to stores_url, notice: 'Store was successfully destroyed.' }
       format.json { head :no_content }

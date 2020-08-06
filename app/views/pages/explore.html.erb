@@ -1,3 +1,36 @@
-<h2>Explore</h2>
+<h3>Explore</h3>
+<p>Click a link to filter the cheese types</p>
+<h2>View All</h2>
 <%= link_to "All Stores", stores_path %><br>
 <%= link_to "All Cheeses", cheeses_path %>
+<h2>Cheese Types</h2>
+<%= link_to 'Mozzarella', cheeses_path(:cheese_type => 'Mozzarella') %>
+<%= link_to 'Cheddar', cheeses_path(:cheese_type => 'Cheddar') %>
+<%= link_to 'Emmental', cheeses_path(:cheese_type => 'Emmental') %>
+<%= link_to 'Gouda', cheeses_path(:cheese_type => 'Gouda') %>
+<%= link_to 'Parmigiano-Reggiano', cheeses_path(:cheese_type => 'Parmigiano-Reggiano') %>
+<%= link_to 'Feta', cheeses_path(:cheese_type => 'Feta') %>
+<%= link_to 'Brie', cheeses_path(:cheese_type => 'Brie') %>
+<%= link_to 'Parmesan', cheeses_path(:cheese_type => 'Parmesan') %>
+<%= link_to 'Mascarpone', cheeses_path(:cheese_type => 'Mascarpone') %>
+<%= link_to 'Gruyere', cheeses_path(:cheese_type => 'Gruyere') %>
+<%= link_to 'Blue', cheeses_path(:cheese_type => 'Blue') %>
+<%= link_to 'Ricotta', cheeses_path(:cheese_type => 'Ricotta') %>
+<h2>Rennet Types</h2>
+<%= link_to 'Animal Rennet', cheeses_path(:rennet_coagulat => 'Animal Rennet') %>
+<%= link_to 'Vegetarian Friendly', cheeses_path(:rennet_coagulat => 'Vegetarian Friendly') %>
+<h2>Rind Types</h2>
+<%= link_to 'No Rind/Waxy Rind', cheeses_path(:rind => 'No Rind/Waxy Rind') %>
+<%= link_to 'Bloomy Rind', cheeses_path(:rind => 'Bloomy Rind') %>
+<%= link_to 'Washed Rind', cheeses_path(:rind => 'Washed Rind') %>
+<%= link_to 'Natural Rind', cheeses_path(:rind => 'Natural Rind') %>
+<h2>Milk Types</h2>
+<%= link_to 'Cow', cheeses_path(:milk => 'Cow') %>
+<%= link_to 'Goat', cheeses_path(:milk => 'Goat') %>
+<%= link_to 'Mixed', cheeses_path(:milk => 'Mixed') %>
+<%= link_to 'Sheep', cheeses_path(:milk => 'Sheep') %>
+<%= link_to 'Water buffalo', cheeses_path(:milk => 'Water buffalo') %>
+<%= link_to 'Yak', cheeses_path(:milk => 'Yak') %>
+<%= link_to 'Soy', cheeses_path(:milk => 'Soy') %>
+<%= link_to 'Almond', cheeses_path(:milk => 'Almond') %>
+<%= link_to 'Rice', cheeses_path(:milk => 'Rice') %>

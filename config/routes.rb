@@ -3,10 +3,15 @@ Rails.application.routes.draw do
   
   resources :stores
   resources :cheeses
+  resources :feedbacks
   root to: 'pages#index'
+
   get '/contact-us', to: 'pages#contact', as: 'contact'
   get '/explore', to: 'pages#explore', as: 'explore'
   get '/users/account', to: 'pages#account', as: 'account'
   get '/payments/success', to: 'payments#success'
+  post '/payments/webhook', to: 'payments#webhook'
+  get '/my_orders' , to: 'pages#my_orders', as: 'orders'
+  get '/payments/successful_payment_landing', to: 'payments#successful_payment_landing', as: 'nailed_it'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
