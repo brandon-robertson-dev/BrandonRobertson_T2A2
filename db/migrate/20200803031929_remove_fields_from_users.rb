@@ -8,7 +8,5 @@ class RemoveFieldsFromUsers < ActiveRecord::Migration[6.0]
     remove_column :stores, :provider
     remove_column :stores, :access_code
     remove_column :stores, :publishable_key
-    remove_column :cheeses, :price_cents
-    remove_column :cheeses, :price_currency
   end
 end
