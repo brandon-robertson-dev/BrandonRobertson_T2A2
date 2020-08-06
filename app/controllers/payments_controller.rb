@@ -31,6 +31,6 @@ class PaymentsController < ApplicationController
         p "cheese id " + cheese_id
         p "user id " + user_id
 
-        status 200
+        head :ok
     end
 end
