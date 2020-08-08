@@ -8,15 +8,17 @@ class Ability
     
     if user.admin?
       can :manage, :all
-      can :buy, Cheese
     elsif user.owner?
       can :manage, Cheese, store_id: user.store.id
       can :manage, Store, user_id: user.id
       can :read, :all
       can :buy, Cheese
+      can :write, Feedback
+      can :manage, Feedback, user_id: user.id
     elsif user.loggedin?
-      can :buy, Cheese
       can :read, :all
+      can :buy, Cheese
+      can :write, Feedback
       can :manage, Feedback, user_id: user.id
     else
       can :read, :all

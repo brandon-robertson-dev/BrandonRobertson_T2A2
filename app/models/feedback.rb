@@ -1,4 +1,4 @@
 class Feedback < ApplicationRecord
   belongs_to :user
-  belongs_to :shop
+  belongs_to :store
 end

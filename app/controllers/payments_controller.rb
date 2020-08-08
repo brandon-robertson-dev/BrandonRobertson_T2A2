@@ -13,6 +13,7 @@ class PaymentsController < ApplicationController
         @order.cheese_title = @cheese.name
         @order.cheese_price = @cheese.price
         @order.shipping_address = current_user.street_address
+        @order.store_id = @cheese.store_id
 
         @order.save
 
@@ -31,6 +32,6 @@ class PaymentsController < ApplicationController
         p "cheese id " + cheese_id
         p "user id " + user_id
 
-        head :ok
+        head 200
     end
 end

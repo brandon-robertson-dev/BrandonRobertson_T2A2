@@ -19,11 +19,11 @@ class FeedbacksController < ApplicationController
     def create
         p "POOPY PANTS"
         p feedback_params
-        @feedback = Feedback.create(feedback_params)
+        @feedback = Feedback.new(feedback_params)
         p "SILLY PANTS"
         p feedback_params
         p @feedback
-        @feedback.save
+        @feedback.save!
         redirect_to store_path(feedback_params[:store_id])
     end
 

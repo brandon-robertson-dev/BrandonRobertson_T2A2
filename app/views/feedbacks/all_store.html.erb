@@ -1,0 +1,12 @@
+<% @store.feedbacks.each do |store| %>
+
+<p>
+    <strong>User:</strong><br>
+    <%= store.user.firstname %><br>
+    <strong>Review:</strong><br>
+    <%= store.comment %>
+</p>
+
+<% end %>
+
+<%= link_to 'Back to Store', store_path(@store.id) %>
