@@ -33,6 +33,8 @@
   </p>
   <%= link_to 'View All Reviews', store_feedbacks_path(:store_id => @store.id) %>
   <br>
+<% else %>
+  <p>There are currently no reviews for this store.</p>
 <% end %>
 <% if current_user %>
   <% if current_user.orders.present? %>
