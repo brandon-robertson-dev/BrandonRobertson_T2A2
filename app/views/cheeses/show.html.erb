@@ -55,47 +55,45 @@
 
 <p>
   <strong>Availability:</strong>
-  <% if current_user %>
+
+<% if current_user %>
+  <% if current_user.store.present? %>
     <% if current_user.store.id == @cheese.store_id %>
       <%= @cheese.availability %><br>
       <p>You cannot buy your own items</p>
-    <% else %>
-      <% if @cheese.availability > 0 %>
-        <%= @cheese.availability %><br>
-          <% if can? :buy, @cheese and current_user.street_address != "Add Address" %>
-            <button data-stripe="payment">
-              Buy Now <%= number_to_currency(@cheese.price) %>
-            </button>
-
-            <script src="https://js.stripe.com/v3/"></script>
-
-            <script>
-              document
-              .querySelector("[data-stripe='payment']")
-              .addEventListener("click", () => {
-              const stripe = Stripe(
-              "<%= Rails.application.credentials.dig(:stripe, :public_key) %>"
-              );
-
-              stripe.redirectToCheckout({
-              sessionId: "<%= @session_id %>"
-              });
-              });
-            </script>
-          <% elsif can? :buy, @cheese and current_user.street_address == "Add Address" %>
-            <p>Please add an address to place an order</p>
-          <% else %>
-            <p>You must be logged in to place an order</p>
-          <% end %>
+  <% else %>
+    <% if @cheese.availability > 0 %>
+      <%= @cheese.availability %><br>
+      <% if can? :buy, @cheese and current_user.street_address != "Add Address" %>
+        <button data-stripe="payment">
+          Buy Now <%= number_to_currency(@cheese.price) %>
+        </button>
+        <script src="https://js.stripe.com/v3/"></script>
+        <script>
+          document
+          .querySelector("[data-stripe='payment']")
+          .addEventListener("click", () => {
+          const stripe = Stripe(
+          "<%= Rails.application.credentials.dig(:stripe, :public_key) %>");
+          stripe.redirectToCheckout({
+          sessionId: "<%= @session_id %>"});});
+        </script>
+      <% elsif can? :buy, @cheese and current_user.street_address == "Add Address" %>
+        <p>Please add an address to place an order</p>
       <% else %>
-        <p>Sold Out</p>
+        <p>You must be logged in to place an order</p>
       <% end %>
+    <% else %>
+      <p>Sold Out</p>
     <% end %>
   <% end %>
+<% end %>
+<% end %>
+<%= @cheese.availability %>
 </p>
-<% if can? :edit, @cheese %>
-  <%= link_to 'Edit', edit_cheese_path(@cheese) %>
-<% end %>
-<% if can? :destroy, @cheese %>
-  | <%= link_to 'Destroy', @cheese, method: :delete, data: { confirm: 'Are you sure?' } %>
-<% end %>
+  <% if can? :edit, @cheese %>
+    <%= link_to 'Edit', edit_cheese_path(@cheese) %>
+  <% end %>
+  <% if can? :destroy, @cheese %>
+    | <%= link_to 'Destroy', @cheese, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
