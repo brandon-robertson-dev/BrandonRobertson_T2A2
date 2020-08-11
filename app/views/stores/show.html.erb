@@ -37,10 +37,12 @@
   <p>There are currently no reviews for this store.</p>
 <% end %>
 <% if current_user %>
-  <% if current_user.orders.present? %>
-    <% if current_user.orders.find(@store.id).store_id == @store.id %>
-      <%= link_to 'Add Review', new_feedback_path(:store_id => @store.id, :user_id => current_user.id) %>
-    <% end %>
+  <% if current_user.feedbacks.find_by(store_id: @store.id).present? %>
+    <p>You have already left a review</p>
+  <% elsif current_user.store.id == @store.id %>
+    <p>You cannot leave a review on your own store</p>
+  <% elsif current_user.orders.find_by(store_id: @store.id) %>
+    <%= link_to 'Add Review', new_feedback_path(:store_id => @store.id, :user_id => current_user.id) %>
   <% end %>
 <% end %>
 <h2>Cheeses</h2>

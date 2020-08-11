@@ -18,12 +18,12 @@
 
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.email_field :email, :required => true %>
   </div>
 
   <div class="field">
     <%= form.label :contact_number %>
-    <%= form.text_field :contact_number %>
+    <%= form.number_field :contact_number %>
   </div>
 
   <div>

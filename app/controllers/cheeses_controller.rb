@@ -52,7 +52,8 @@ class CheesesController < ApplicationController
 
   # GET /cheeses/1/edit
   def edit
-    @store = params[:store_id]
+    puts params
+    @store = Cheese.find(params[:id]).store_id
   end
 
   # POST /cheeses

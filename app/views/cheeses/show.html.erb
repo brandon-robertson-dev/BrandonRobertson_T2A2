@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= image_tag @cheese.item_picture if @cheese.item_picture.attached? %>
+
 <p>
   <strong>Name:</strong>
   <%= @cheese.name %>
@@ -18,7 +20,7 @@
 
 <p>
   <strong>Price:</strong>
-  <%= @cheese.price %>
+  $<%= @cheese.price %>
 </p>
 
 <p>
@@ -51,39 +53,44 @@
   <%= @cheese.size %>
 </p>
 
-
-
 <p>
   <strong>Availability:</strong>
-  <% if @cheese.availability > 0 %>
-    <%= @cheese.availability %><br>
-      <% if can? :buy, @cheese and current_user.street_address != "Add Address" %>
-        <button data-stripe="payment">
-          Buy Now <%= number_to_currency(@cheese.price) %>
-        </button>
+  <% if current_user %>
+    <% if current_user.store.id == @cheese.store_id %>
+      <%= @cheese.availability %><br>
+      <p>You cannot buy your own items</p>
+    <% else %>
+      <% if @cheese.availability > 0 %>
+        <%= @cheese.availability %><br>
+          <% if can? :buy, @cheese and current_user.street_address != "Add Address" %>
+            <button data-stripe="payment">
+              Buy Now <%= number_to_currency(@cheese.price) %>
+            </button>
 
-        <script src="https://js.stripe.com/v3/"></script>
+            <script src="https://js.stripe.com/v3/"></script>
 
-        <script>
-          document
-          .querySelector("[data-stripe='payment']")
-          .addEventListener("click", () => {
-          const stripe = Stripe(
-          "<%= Rails.application.credentials.dig(:stripe, :public_key) %>"
-          );
+            <script>
+              document
+              .querySelector("[data-stripe='payment']")
+              .addEventListener("click", () => {
+              const stripe = Stripe(
+              "<%= Rails.application.credentials.dig(:stripe, :public_key) %>"
+              );
 
-          stripe.redirectToCheckout({
-          sessionId: "<%= @session_id %>"
-          });
-          });
-        </script>
-      <% elsif can? :buy, @cheese and current_user.street_address == "Add Address" %>
-        <p>Please add an address to place an order</p>
+              stripe.redirectToCheckout({
+              sessionId: "<%= @session_id %>"
+              });
+              });
+            </script>
+          <% elsif can? :buy, @cheese and current_user.street_address == "Add Address" %>
+            <p>Please add an address to place an order</p>
+          <% else %>
+            <p>You must be logged in to place an order</p>
+          <% end %>
       <% else %>
-        <p>You must be logged in to place an order</p>
+        <p>Sold Out</p>
       <% end %>
-  <% else %>
-    <p>Sold Out</p>
+    <% end %>
   <% end %>
 </p>
 <% if can? :edit, @cheese %>

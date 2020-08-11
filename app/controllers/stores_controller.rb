@@ -22,6 +22,7 @@ class StoresController < ApplicationController
 
   # GET /stores/1/edit
   def edit
+    @user = Store.find(params[:id]).user_id
   end
 
   # POST /stores
